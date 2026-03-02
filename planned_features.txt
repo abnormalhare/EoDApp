@@ -1,0 +1,48 @@
+Basic Features
+- Elements
+  - Crafting
+  - Creation
+	- Naming
+	- Coloring
+	- Describing
+- UI
+  - Element Info
+	- Path
+  - Inventory
+  - Leaderboard
+  - Stats
+  - Voting
+  - News
+- Categories
+  - Basic Cats
+  - Queries
+	- Regex
+- Hints
+  - Normal Hints
+  - Elemental Hints
+  - Normal Next
+  - Categorical Next
+  - Products
+- Saving & Loading
+  - Offline Games
+	- Read-only copies
+	- Self-hosted
+
+Multiplayer
+  - Servers
+	- Server 1: Current Season, Past 2 Seasons
+	- Server 2: Permanent New Server: EE
+	- Server 3: Archives of E1, 2, 3, 4, EoD Classic
+	- Server 4: Season Archives
+  - Server Functionality
+	- Servers have multiple Games
+	- Server 1 creates a new season every (year / 6 months), oldest season archived
+	- Servers 3 and 4 are read-only
+	- Hostable Locally (maybe a server list, but all run P2P)
+	- Lite Functionality: Definable Elements & Paths
+	- Copyable if read-only
+  - Async
+	- Voting
+	- Chat?
+  - Sync?
+	- News

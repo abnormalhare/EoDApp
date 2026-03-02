@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://c2pr0x8g5xjn2"]
 
 [ext_resource type="Theme" uid="uid://bbg3suph6fdnq" path="res://themes/main_menu_theme.tres" id="1_l6cm7"]
+[ext_resource type="Script" uid="uid://dv07qkqsj6o7v" path="res://scripts/main_menu/play_game_button.gd" id="2_ekxnf"]
 
 [node name="MainMenu" type="Control" unique_id=1475363255]
 layout_mode = 3
@@ -38,3 +39,4 @@ custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme = ExtResource("1_l6cm7")
 text = "Play Game"
+script = ExtResource("2_ekxnf")

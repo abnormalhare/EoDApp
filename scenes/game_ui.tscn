@@ -1,0 +1,50 @@
+[gd_scene format=3 uid="uid://c7tvwhb1o7un0"]
+
+[sub_resource type="Theme" id="Theme_ojb23"]
+
+[node name="GameUI" type="Control" unique_id=1777733730]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Game" type="HBoxContainer" parent="." unique_id=1691467122]
+layout_mode = 0
+offset_right = 1151.0
+offset_bottom = 650.0
+
+[node name="ElemInfo" type="VBoxContainer" parent="Game" unique_id=736598976]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Game/ElemInfo" unique_id=1670876588]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.1
+
+[node name="Label" type="Label" parent="Game/ElemInfo" unique_id=899888898]
+layout_mode = 2
+size_flags_vertical = 2
+theme = SubResource("Theme_ojb23")
+text = "Element
+Info"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Playfield" type="VBoxContainer" parent="Game" unique_id=812609166]
+layout_mode = 2
+size_flags_horizontal = 6
+alignment = 1
+
+[node name="Multplayer" type="VBoxContainer" parent="Game" unique_id=1420651018]
+layout_mode = 2
+alignment = 2
+
+[node name="Voting" type="VBoxContainer" parent="Game/Multplayer" unique_id=706473500]
+layout_mode = 2
+size_flags_vertical = 2
+
+[node name="News" type="VBoxContainer" parent="Game/Multplayer" unique_id=1576150303]
+layout_mode = 2
+size_flags_vertical = 10

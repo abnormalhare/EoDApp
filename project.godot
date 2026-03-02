@@ -10,11 +10,25 @@ config_version=5
 
 [application]
 
-config/name="EoDE App"
+config/name="Elemental Everywhere"
 config/description="EoD Everywhere Graphical Interface"
 config/version="0.0.1"
+run/main_scene="uid://c2pr0x8g5xjn2"
 config/features=PackedStringArray("4.6", "Forward Plus")
+boot_splash/bg_color=Color(0.2254, 0.35770002, 0.49, 1)
 config/icon="res://icon.svg"
+
+[autoload]
+
+Global="*uid://b021j3ym5wqcs"
+
+[file_customization]
+
+folder_colors={
+"res://scenes/": "blue",
+"res://scripts/": "orange",
+"res://themes/": "purple"
+}
 
 [physics]
 
@@ -23,3 +37,4 @@ config/icon="res://icon.svg"
 [rendering]
 
 rendering_device/driver.windows="d3d12"
+environment/defaults/default_clear_color=Color(0.22352941, 0.35686275, 0.49019608, 1)
