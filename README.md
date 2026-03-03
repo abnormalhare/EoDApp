@@ -1,4 +1,4 @@
-# EoD App
+# Elemental Everywhere
 A grahpical interface for connecting to and playing EoD without using Discord.
 
 # How to Use
