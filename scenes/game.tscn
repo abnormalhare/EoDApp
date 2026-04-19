@@ -7,3 +7,5 @@
 script = ExtResource("1_uwrxv")
 
 [node name="GameUI" parent="." unique_id=1777733730 instance=ExtResource("2_yqjtg")]
+
+[connection signal="send_message" from="GameUI" to="." method="_on_game_ui_send_message"]

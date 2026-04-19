@@ -1,5 +1,9 @@
 [gd_scene format=3 uid="uid://c7tvwhb1o7un0"]
 
+[ext_resource type="Script" uid="uid://hpafofgvsc0s" path="res://scripts/game/game_ui.gd" id="1_u001w"]
+[ext_resource type="Theme" uid="uid://bbg3suph6fdnq" path="res://themes/main_menu_theme.tres" id="1_yubou"]
+[ext_resource type="Script" uid="uid://d2u66bsu45vw3" path="res://scripts/game/send_message.gd" id="2_rns2u"]
+
 [sub_resource type="Theme" id="Theme_ojb23"]
 
 [node name="GameUI" type="Control" unique_id=1777733730]
@@ -9,11 +13,12 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_u001w")
 
 [node name="Game" type="HBoxContainer" parent="." unique_id=1691467122]
 layout_mode = 0
 offset_right = 1151.0
-offset_bottom = 650.0
+offset_bottom = 615.0
 
 [node name="ElemInfo" type="VBoxContainer" parent="Game" unique_id=736598976]
 layout_mode = 2
@@ -48,3 +53,21 @@ size_flags_vertical = 2
 [node name="News" type="VBoxContainer" parent="Game/Multplayer" unique_id=1576150303]
 layout_mode = 2
 size_flags_vertical = 10
+
+[node name="Chat" type="VBoxContainer" parent="Game/Multplayer" unique_id=1904576126]
+layout_mode = 2
+
+[node name="ChatLog" type="TextEdit" parent="Game/Multplayer/Chat" unique_id=511047664]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+theme = ExtResource("1_yubou")
+editable = false
+
+[node name="Message" type="TextEdit" parent="Game/Multplayer/Chat" unique_id=1753305446]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme = ExtResource("1_yubou")
+wrap_mode = 1
+script = ExtResource("2_rns2u")
+
+[connection signal="send_message" from="Game/Multplayer/Chat/Message" to="." method="_on_message_send_message"]

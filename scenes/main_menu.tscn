@@ -2,6 +2,8 @@
 
 [ext_resource type="Theme" uid="uid://bbg3suph6fdnq" path="res://themes/main_menu_theme.tres" id="1_l6cm7"]
 [ext_resource type="Script" uid="uid://dv07qkqsj6o7v" path="res://scripts/main_menu/play_game_button.gd" id="2_ekxnf"]
+[ext_resource type="Script" uid="uid://b516xdrc0i6hw" path="res://scripts/main_menu/username.gd" id="2_wu84c"]
+[ext_resource type="Script" uid="uid://d4dwkv3si3aeo" path="res://scripts/main_menu/host_server_button.gd" id="3_bqqt6"]
 
 [node name="MainMenu" type="Control" unique_id=1475363255]
 layout_mode = 3
@@ -30,6 +32,17 @@ horizontal_alignment = 1
 custom_minimum_size = Vector2(0, 150)
 layout_mode = 2
 
+[node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer" unique_id=1682945553]
+layout_mode = 2
+alignment = 1
+
+[node name="TextEdit" type="TextEdit" parent="VBoxContainer/HBoxContainer3" unique_id=1803458469]
+custom_minimum_size = Vector2(300, 50)
+layout_mode = 2
+theme = ExtResource("1_l6cm7")
+placeholder_text = "Enter Name"
+script = ExtResource("2_wu84c")
+
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=1073686630]
 layout_mode = 2
 alignment = 1
@@ -40,3 +53,18 @@ layout_mode = 2
 theme = ExtResource("1_l6cm7")
 text = "Play Game"
 script = ExtResource("2_ekxnf")
+
+[node name="MarginContainer3" type="MarginContainer" parent="VBoxContainer" unique_id=1899375322]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer" unique_id=863769454]
+layout_mode = 2
+alignment = 1
+
+[node name="Button" type="Button" parent="VBoxContainer/HBoxContainer2" unique_id=1887182925]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+theme = ExtResource("1_l6cm7")
+text = "Host Server"
+script = ExtResource("3_bqqt6")

@@ -3,3 +3,4 @@
 [resource]
 Button/font_sizes/font_size = 30
 Label/font_sizes/font_size = 50
+TextEdit/font_sizes/font_size = 25
