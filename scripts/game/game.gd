@@ -14,7 +14,7 @@ func _ready() -> void:
 	if Global.is_server:
 		peer.create_server(3043);
 	else:
-		peer.create_client("127.0.0.1", 3043);
+		peer.create_client(Global.server_ip, 3043);
 
 	multiplayer.multiplayer_peer = peer;
 	
