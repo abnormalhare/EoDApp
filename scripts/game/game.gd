@@ -7,6 +7,7 @@ func set_username(username: String):
 		Global.player_names[multiplayer.get_unique_id()] = username;
 	elif multiplayer.is_server():
 		Global.player_names[sender_id] = username;
+	send_chat_message.rpc("Connected.")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -31,7 +32,6 @@ func _ready() -> void:
 		set_username.rpc(Global.curr_player_name)
 	else:
 		set_username(Global.curr_player_name)
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
