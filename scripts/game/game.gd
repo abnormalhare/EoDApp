@@ -1,5 +1,14 @@
 extends Node2D
 
+var elements: Array[Element] = [
+	Element.new("Air", 0, Global.load_image("Air")),
+	Element.new("Earth", 1, Global.load_image("Earth")),
+	Element.new("Fire", 2, Global.load_image("Fire")),
+	Element.new("Water", 3, Global.load_image("Water")),
+]
+var combos: Array[Combination]
+var element_list_updated: bool = false
+
 @rpc("any_peer", "call_remote", "reliable")
 func set_username(username: String):
 	var sender_id = multiplayer.get_remote_sender_id()
@@ -7,10 +16,14 @@ func set_username(username: String):
 		Global.player_names[multiplayer.get_unique_id()] = username;
 	elif multiplayer.is_server():
 		Global.player_names[sender_id] = username;
-	send_chat_message.rpc("Connected.")
+	send_chat_message.rpc_id(multiplayer.get_unique_id(), "Connected.")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	init_multiplayer();
+	$GameUI.update_elements(elements);
+
+func init_multiplayer():
 	var peer = ENetMultiplayerPeer.new();
 	var error: Error;
 	if Global.is_server:
@@ -26,7 +39,7 @@ func _ready() -> void:
 
 	multiplayer.multiplayer_peer = peer;
 	
-	await get_tree().create_timer(0.5).timeout; # takes time to load multiplayer
+	await get_tree().create_timer(0.25).timeout; # takes time to load multiplayer
 	
 	if not Global.is_server:
 		set_username.rpc(Global.curr_player_name)
@@ -35,13 +48,10 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
+	if element_list_updated:
+		$GameUI.update_elements(elements);
 	if Global.is_typing:
 		return
-
-	if Input.is_action_just_pressed("new_element"):
-		var elem = Global.load_node("element");
-		add_child(elem)
-		elem.load_init();
 
 @rpc("any_peer", "call_local", "reliable")
 func send_chat_message(msg: String):
@@ -64,3 +74,15 @@ func _notification(what: int) -> void:
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
 		multiplayer.multiplayer_peer.close();
 		get_tree().quit();
+
+
+func _on_game_ui_make_new_element(e_name: String, pos: Vector2) -> void:
+	var element;
+	for elem in elements:
+		if elem.name == e_name:
+			element = elem;
+	
+	var draggable_element = Global.load_node("element");
+	add_child(draggable_element)
+	draggable_element.load_init(element, pos);
+	draggable_element.is_clicked = true;

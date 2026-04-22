@@ -4,6 +4,11 @@
 [ext_resource type="Theme" uid="uid://bbg3suph6fdnq" path="res://themes/main_menu_theme.tres" id="1_yubou"]
 [ext_resource type="Script" uid="uid://d2u66bsu45vw3" path="res://scripts/game/send_message.gd" id="2_rns2u"]
 
+[sub_resource type="Theme" id="Theme_u001w"]
+Button/font_sizes/font_size = 30
+Label/font_sizes/font_size = 50
+TextEdit/font_sizes/font_size = 25
+
 [sub_resource type="Theme" id="Theme_ojb23"]
 
 [node name="GameUI" type="Control" unique_id=1777733730]
@@ -19,28 +24,43 @@ script = ExtResource("1_u001w")
 layout_mode = 0
 offset_right = 1151.0
 offset_bottom = 615.0
+alignment = 2
 
 [node name="ElemInfo" type="VBoxContainer" parent="Game" unique_id=736598976]
 layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="Game/ElemInfo" unique_id=1670876588]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.1
+size_flags_vertical = 0
+theme = SubResource("Theme_u001w")
 
 [node name="Label" type="Label" parent="Game/ElemInfo" unique_id=899888898]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 size_flags_vertical = 2
 theme = SubResource("Theme_ojb23")
-text = "Element
-Info"
+theme_override_font_sizes/font_size = 29
+text = "Element Info"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Playfield" type="VBoxContainer" parent="Game" unique_id=812609166]
+[node name="TextEdit" type="TextEdit" parent="Game/ElemInfo" unique_id=1115254877]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
-size_flags_horizontal = 6
-alignment = 1
+size_flags_vertical = 0
+placeholder_text = "Search..."
+script = ExtResource("2_rns2u")
+
+[node name="ElemList" type="ItemList" parent="Game/ElemInfo" unique_id=534670006]
+custom_minimum_size = Vector2(0, 500)
+layout_mode = 2
+size_flags_vertical = 3
+max_columns = 2
+same_column_width = true
+
+[node name="CombineArea" type="VBoxContainer" parent="Game" unique_id=812609166]
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="ItemList" type="ItemList" parent="Game/CombineArea" unique_id=56341256]
+layout_mode = 2
 
 [node name="Multplayer" type="VBoxContainer" parent="Game" unique_id=1420651018]
 layout_mode = 2
@@ -72,4 +92,5 @@ theme = ExtResource("1_yubou")
 wrap_mode = 1
 script = ExtResource("2_rns2u")
 
+[connection signal="item_clicked" from="Game/ElemInfo/ElemList" to="." method="_on_elem_list_item_clicked"]
 [connection signal="send_message" from="Game/Multplayer/Chat/Message" to="." method="_on_message_send_message"]
