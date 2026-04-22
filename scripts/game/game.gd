@@ -35,6 +35,9 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
+	if Global.is_typing:
+		return
+
 	if Input.is_action_just_pressed("new_element"):
 		var elem = Global.load_node("element");
 		add_child(elem)

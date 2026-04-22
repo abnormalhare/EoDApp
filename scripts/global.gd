@@ -6,6 +6,7 @@ var curr_player_name: String = ""
 var server_ip: String = ""
 var element_pos: Array[Vector2] = [];
 var next_element_id: int = 0;
+var is_typing: bool = false;
 
 func change_scene(to: String):
 	get_tree().change_scene_to_file("res://scenes/" + to + ".tscn")
