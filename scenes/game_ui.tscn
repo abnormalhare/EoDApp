@@ -61,7 +61,9 @@ layout_mode = 2
 custom_minimum_size = Vector2(200, 200)
 layout_mode = 2
 theme = ExtResource("1_yubou")
+theme_override_font_sizes/font_size = 16
 editable = false
+wrap_mode = 1
 
 [node name="Message" type="TextEdit" parent="Game/Multplayer/Chat" unique_id=1753305446]
 custom_minimum_size = Vector2(0, 50)

@@ -11,10 +11,17 @@ func set_username(username: String):
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	var peer = ENetMultiplayerPeer.new();
+	var error: Error;
 	if Global.is_server:
-		peer.create_server(3043);
+		error = peer.create_server(3043);
 	else:
-		peer.create_client(Global.server_ip, 3043);
+		error = peer.create_client(Global.server_ip, 3043);
+
+	match error:
+		ERR_ALREADY_IN_USE:
+			print("Uh oh! Multiplayer Peer already open!")
+		ERR_CANT_CREATE:
+			print("Uh oh! Multiplayer Peer can't be made!")
 
 	multiplayer.multiplayer_peer = peer;
 	
@@ -24,16 +31,18 @@ func _ready() -> void:
 		set_username.rpc(Global.curr_player_name)
 	else:
 		set_username(Global.curr_player_name)
+	
+	$Element.move_element();
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	pass;
+	pass
 
 func sanitize_message(msg: String) -> String:
 	return msg;
 
-@rpc("any_peer", "call_remote", "reliable")
+@rpc("any_peer", "call_local", "reliable")
 func send_chat_message(msg: String):
 	if not multiplayer.is_server(): return;
 	
@@ -45,7 +54,12 @@ func send_chat_message(msg: String):
 
 @rpc("authority", "call_local", "reliable")
 func receive_chat_message(sender_name: String, msg: String):
-	$GameUI.append_chat_log("\n%s: %s" % [sender_name, msg]);
+	$GameUI.append_chat_log("%s: %s" % [sender_name, msg]);
 
 func _on_game_ui_send_message(text) -> void:
 	send_chat_message.rpc(text)
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_WM_CLOSE_REQUEST:
+		multiplayer.multiplayer_peer.close();
+		get_tree().quit();

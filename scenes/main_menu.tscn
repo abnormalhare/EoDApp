@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://c2pr0x8g5xjn2"]
 
-[ext_resource type="Script" uid="uid://btuvj1ug2tmjr" path="res://scenes/main_menu.gd" id="1_8ln24"]
+[ext_resource type="Script" uid="uid://btuvj1ug2tmjr" path="res://scripts/main_menu/main_menu.gd" id="1_8ln24"]
 [ext_resource type="Theme" uid="uid://bbg3suph6fdnq" path="res://themes/main_menu_theme.tres" id="1_l6cm7"]
 [ext_resource type="Script" uid="uid://dv07qkqsj6o7v" path="res://scripts/main_menu/play_game_button.gd" id="2_ekxnf"]
 [ext_resource type="Script" uid="uid://b516xdrc0i6hw" path="res://scripts/main_menu/username.gd" id="2_wu84c"]
 [ext_resource type="Script" uid="uid://d4dwkv3si3aeo" path="res://scripts/main_menu/host_server_button.gd" id="3_bqqt6"]
-[ext_resource type="Script" uid="uid://c5r1ro2glgqnj" path="res://scenes/ip_input.gd" id="4_rtw2f"]
+[ext_resource type="Script" uid="uid://c5r1ro2glgqnj" path="res://scripts/main_menu/ip_input.gd" id="4_rtw2f"]
 
 [node name="MainMenu" type="Control" unique_id=1475363255]
 layout_mode = 3

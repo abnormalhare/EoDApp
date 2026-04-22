@@ -1,11 +1,17 @@
 [gd_scene format=3 uid="uid://dbclc1i1bx5jo"]
 
 [ext_resource type="Script" uid="uid://iabdaeagcwa6" path="res://scripts/game/game.gd" id="1_uwrxv"]
+[ext_resource type="PackedScene" uid="uid://cid5yg2oty1ua" path="res://scenes/element.tscn" id="2_lnu2h"]
 [ext_resource type="PackedScene" uid="uid://c7tvwhb1o7un0" path="res://scenes/game_ui.tscn" id="2_yqjtg"]
 
 [node name="Game" type="Node2D" unique_id=1234449519]
 script = ExtResource("1_uwrxv")
 
+[node name="Element" parent="." unique_id=292209877 instance=ExtResource("2_lnu2h")]
+position = Vector2(327.5, 285.5)
+scale = Vector2(0.6484375, 0.6484375)
+
 [node name="GameUI" parent="." unique_id=1777733730 instance=ExtResource("2_yqjtg")]
+mouse_filter = 1
 
 [connection signal="send_message" from="GameUI" to="." method="_on_game_ui_send_message"]
