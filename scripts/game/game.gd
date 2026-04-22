@@ -31,13 +31,14 @@ func _ready() -> void:
 		set_username.rpc(Global.curr_player_name)
 	else:
 		set_username(Global.curr_player_name)
-	
-	$Element.move_element();
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	pass
+	if Input.is_action_just_pressed("new_element"):
+		var elem = Global.load_node("element");
+		add_child(elem)
+		elem.load_init();
 
 func sanitize_message(msg: String) -> String:
 	return msg;

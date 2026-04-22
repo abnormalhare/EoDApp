@@ -3,7 +3,7 @@ extends TextEdit
 signal invalid_ip
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if not has_focus(): return
 	
 	if not Input.is_action_just_pressed("send_chat"):

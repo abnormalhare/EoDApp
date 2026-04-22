@@ -5,6 +5,7 @@ Basic Features
 	- Naming
 	- Coloring
 	- Describing
+	- Imaging
 - UI
   - Element Info
 	- Path

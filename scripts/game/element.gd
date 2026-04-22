@@ -2,10 +2,27 @@ extends Sprite2D
 
 var is_clicked: bool = false;
 var mouse_offset: Vector2;
+var id: int
 
 @rpc("any_peer", "call_local", "reliable")
 func move_element(pos: Vector2):
 	position = pos;
+	Global.element_pos[id] = pos;
+
+func load_init() -> void:
+	scale.x = 0.648;
+	scale.y = 0.648;
+	
+	init()
+
+func init():
+	id = Global.next_element_id;
+	Global.next_element_id += 1;
+	Global.element_pos.append(position)
+	move_element.rpc(position)
+
+func _ready() -> void:
+	init()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
