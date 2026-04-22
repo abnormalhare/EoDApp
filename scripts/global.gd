@@ -25,3 +25,6 @@ func is_valid_ip_addr(ip: String) -> bool:
 			return false
 
 	return true
+
+func sanitize_message(msg: String) -> String:
+	return msg.strip_edges();

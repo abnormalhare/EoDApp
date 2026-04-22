@@ -43,14 +43,11 @@ func _process(_delta: float) -> void:
 		add_child(elem)
 		elem.load_init();
 
-func sanitize_message(msg: String) -> String:
-	return msg;
-
 @rpc("any_peer", "call_local", "reliable")
 func send_chat_message(msg: String):
 	if not multiplayer.is_server(): return;
 	
-	var sanitized_msg = sanitize_message(msg);
+	var sanitized_msg = Global.sanitize_message(msg);
 	
 	var sender_id = multiplayer.get_remote_sender_id();
 	var sender_name = Global.player_names[sender_id];

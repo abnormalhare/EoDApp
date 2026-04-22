@@ -12,3 +12,5 @@ func _process(_delta: float) -> void:
 			release_focus()
 		if Input.is_action_just_pressed("close_chat"):
 			release_focus()
+	else:
+		Global.is_typing = false;
