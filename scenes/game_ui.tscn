@@ -52,15 +52,26 @@ script = ExtResource("2_rns2u")
 custom_minimum_size = Vector2(0, 500)
 layout_mode = 2
 size_flags_vertical = 3
-max_columns = 2
 same_column_width = true
+
+[node name="MarginContainer" type="MarginContainer" parent="Game" unique_id=236972294]
+custom_minimum_size = Vector2(600, 0)
+layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="CombineArea" type="VBoxContainer" parent="Game" unique_id=812609166]
 layout_mode = 2
-size_flags_horizontal = 10
+size_flags_horizontal = 3
 
 [node name="ItemList" type="ItemList" parent="Game/CombineArea" unique_id=56341256]
 layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Button" type="Button" parent="Game/CombineArea" unique_id=1599360493]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme = ExtResource("1_yubou")
+text = "Combine"
 
 [node name="Multplayer" type="VBoxContainer" parent="Game" unique_id=1420651018]
 layout_mode = 2
@@ -93,4 +104,5 @@ wrap_mode = 1
 script = ExtResource("2_rns2u")
 
 [connection signal="item_clicked" from="Game/ElemInfo/ElemList" to="." method="_on_elem_list_item_clicked"]
+[connection signal="pressed" from="Game/CombineArea/Button" to="." method="_on_button_pressed"]
 [connection signal="send_message" from="Game/Multplayer/Chat/Message" to="." method="_on_message_send_message"]

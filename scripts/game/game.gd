@@ -45,13 +45,25 @@ func init_multiplayer():
 		set_username.rpc(Global.curr_player_name)
 	else:
 		set_username(Global.curr_player_name)
+		multiplayer.peer_connected.connect(peer_connected)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	if element_list_updated:
-		$GameUI.update_elements(elements);
+	if Input.is_action_just_pressed("quit"):
+		Global.change_scene("main_menu");
 	if Global.is_typing:
 		return
+
+@rpc("authority", "call_remote", "reliable")
+func add_element(elem):
+	add_child(elem)
+
+func peer_connected(id: int):
+	if not multiplayer.is_server(): return
+	
+	for i in get_children():
+		if i is not Sprite2D: continue
+		add_element.rpc(i);
 
 @rpc("any_peer", "call_local", "reliable")
 func send_chat_message(msg: String):
@@ -75,8 +87,20 @@ func _notification(what: int) -> void:
 		multiplayer.multiplayer_peer.close();
 		get_tree().quit();
 
+func remove_element(idx: int):
+	for i in get_children():
+		if i is not Sprite2D: continue
+		if i.id != idx: continue
+		remove_child(i)
+		i.queue_free()
+		break
 
-func _on_game_ui_make_new_element(e_name: String, pos: Vector2) -> void:
+func check_element_in_combiner(idx: int, e_idx: int, pos: Vector2):
+	if $GameUI.check_element_in_combiner(e_idx, pos):
+		remove_element(idx);
+
+@rpc("any_peer", "call_local", "reliable")
+func make_new_element(e_name: String, pos: Vector2) -> void:
 	var element;
 	for elem in elements:
 		if elem.name == e_name:
@@ -86,3 +110,10 @@ func _on_game_ui_make_new_element(e_name: String, pos: Vector2) -> void:
 	add_child(draggable_element)
 	draggable_element.load_init(element, pos);
 	draggable_element.is_clicked = true;
+	draggable_element.combine_check.connect(check_element_in_combiner);
+	
+func _on_game_ui_make_new_element(e_name: String, pos: Vector2) -> void:
+	make_new_element.rpc(e_name, pos);
+
+func _on_combine_element() -> void:
+	pass # Replace with function body.

@@ -1,19 +1,18 @@
 [gd_scene format=3 uid="uid://cid5yg2oty1ua"]
 
-[ext_resource type="Texture2D" uid="uid://bwlk8ahpma4nn" path="res://icon.svg" id="1_ulukm"]
+[ext_resource type="Texture2D" uid="uid://djpqdcselecyh" path="res://export/linux-x86_64/assets/Air.png" id="1_0xve5"]
 [ext_resource type="Script" uid="uid://daqih3pml3xgp" path="res://scripts/game/element.gd" id="2_0xve5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0xve5"]
-size = Vector2(129, 128)
+size = Vector2(32, 32)
 
 [node name="Element" type="Sprite2D" unique_id=292209877]
-texture = ExtResource("1_ulukm")
+texture = ExtResource("1_0xve5")
 script = ExtResource("2_0xve5")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=1534514776]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=794975516]
-position = Vector2(-0.5, 0)
 shape = SubResource("RectangleShape2D_0xve5")
 
 [connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]
