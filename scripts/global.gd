@@ -18,8 +18,7 @@ func load_node(scene: String) -> Node:
 	return node.instantiate();
 
 func load_image(image: String) -> ImageTexture:
-	var texture = Image.load_from_file("res://assets/" + image + ".png");
-	return ImageTexture.create_from_image(texture);
+	return load("res://assets/" + image + ".png");
 
 func is_valid_ip_addr(ip: String) -> bool:
 	var ip_nums = ip.split(".")

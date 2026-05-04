@@ -5,6 +5,7 @@ signal combine_check
 var is_clicked: bool = false;
 var mouse_offset: Vector2;
 var id: int
+var elem_id: int
 
 @rpc("any_peer", "call_local", "reliable")
 func move_element(pos: Vector2):
@@ -14,6 +15,7 @@ func move_element(pos: Vector2):
 func load_init(elem: Element, pos: Vector2 = position) -> void:
 	texture = elem.image;
 	position = pos;
+	elem_id = elem.id;
 	
 	init()
 
@@ -43,4 +45,4 @@ func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int
 		elif event.is_released() and event.button_index == MOUSE_BUTTON_LEFT:
 			is_clicked = false;
 			Global.is_being_dragged = null;
-			combine_check.emit(position)
+			combine_check.emit(id, elem_id, position)

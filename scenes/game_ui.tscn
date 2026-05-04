@@ -52,6 +52,7 @@ script = ExtResource("2_rns2u")
 custom_minimum_size = Vector2(0, 500)
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 1
 same_column_width = true
 
 [node name="MarginContainer" type="MarginContainer" parent="Game" unique_id=236972294]
@@ -63,7 +64,7 @@ size_flags_horizontal = 3
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="ItemList" type="ItemList" parent="Game/CombineArea" unique_id=56341256]
+[node name="CombineList" type="ItemList" parent="Game/CombineArea" unique_id=56341256]
 layout_mode = 2
 size_flags_vertical = 3
 

@@ -63,7 +63,7 @@ func peer_connected(id: int):
 	
 	for i in get_children():
 		if i is not Sprite2D: continue
-		add_element.rpc(i);
+		add_element.rpc(id);
 
 @rpc("any_peer", "call_local", "reliable")
 func send_chat_message(msg: String):
@@ -96,8 +96,11 @@ func remove_element(idx: int):
 		break
 
 func check_element_in_combiner(idx: int, e_idx: int, pos: Vector2):
-	if $GameUI.check_element_in_combiner(e_idx, pos):
-		remove_element(idx);
+	var element: Element = elements[e_idx];
+	$GameUI.check_element_in_combiner.rpc(element, idx, pos)
+
+func _on_combine_element(idx: int) -> void:
+	remove_element(idx);
 
 @rpc("any_peer", "call_local", "reliable")
 func make_new_element(e_name: String, pos: Vector2) -> void:
@@ -114,6 +117,3 @@ func make_new_element(e_name: String, pos: Vector2) -> void:
 	
 func _on_game_ui_make_new_element(e_name: String, pos: Vector2) -> void:
 	make_new_element.rpc(e_name, pos);
-
-func _on_combine_element() -> void:
-	pass # Replace with function body.
