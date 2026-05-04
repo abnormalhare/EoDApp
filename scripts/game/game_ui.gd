@@ -31,19 +31,20 @@ func _on_elem_list_item_clicked(index: int, at_position: Vector2, mouse_button_i
 	var elem_name: String = ElemList.get_item_text(index);
 	make_new_element.emit(elem_name, at_position + ElemList.global_position);
 
+func add_element_to_combiner(element: Element, idx: int):
+	CombineList.add_item(element.name, element.image)
+	combine_element.emit(idx)
+
 @rpc("authority", "call_local", "reliable")
-func place_element_in_combiner(element: Element, idx: int, pos: Vector2):
+func server_check_element_in_combiner(element: Element, idx: int, pos: Vector2):
 	var top_left = Vector2(pos.x - 16, pos.y - 16);
 	var bottom_right = Vector2(pos.x + 16, pos.y + 16);
 	if top_left > CombineList.global_position and bottom_right < CombineList.global_position + CombineList.size:
-		CombineList.add_item(element.name, element.image)
-		combine_element.emit(idx)
-		return true
-	return false
+		add_element_to_combiner(element, idx)
 
 @rpc("any_peer", "call_local", "reliable")
 func check_element_in_combiner(element: Element, idx: int, pos: Vector2):
-	place_element_in_combiner.rpc(element, idx, pos)
+	server_check_element_in_combiner.rpc(element, idx, pos)
 
 func _on_button_pressed() -> void:
 	pass

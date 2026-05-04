@@ -47,20 +47,37 @@ func init_multiplayer():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("quit"):
-		Global.change_scene("main_menu");
+		return_to_menu()
 	if Global.is_typing:
 		return
 
-@rpc("authority", "call_remote", "reliable")
-func add_element(elem):
-	add_child(elem)
+func return_to_menu():
+	send_chat_message.rpc("Disconnected");
+	if multiplayer.is_server():
+		send_server_message.rpc("THIS SERVER HAS CLOSED.")
 
-func peer_connected(id: int):
+	multiplayer.multiplayer_peer.close();
+	Global.change_scene("main_menu");
+
+@rpc("any_peer", "call_remote", "reliable")
+func add_element(element: Sprite2D):
+	add_child(element)
+
+@rpc("authority", "call_local", "reliable")
+func send_server_elements(uid: int):
+	for i in get_children():
+		if i is not Sprite2D: continue;
+		add_element.rpc_id(uid, i)
+
+@rpc("any_peer", "call_local", "reliable")
+func get_server_elements():
+	if multiplayer.is_server():
+		send_server_elements.rpc(multiplayer.get_remote_sender_id())
+
+func peer_connected():
 	if not multiplayer.is_server(): return
 	
-	for i in get_children():
-		if i is not Sprite2D: continue
-		add_element.rpc(id);
+	get_server_elements.rpc();
 
 @rpc("any_peer", "call_local", "reliable")
 func send_chat_message(msg: String):
@@ -76,13 +93,12 @@ func send_chat_message(msg: String):
 func receive_chat_message(sender_name: String, msg: String):
 	$GameUI.append_chat_log("%s: %s" % [sender_name, msg]);
 
+@rpc("authority", "call_local", "reliable")
+func send_server_message(msg: String):
+	$GameUI.append_chat_log("SERVER: %s" % [msg]);
+
 func _on_game_ui_send_message(text) -> void:
 	send_chat_message.rpc(text)
-
-func _notification(what: int) -> void:
-	if what == NOTIFICATION_WM_CLOSE_REQUEST:
-		multiplayer.multiplayer_peer.close();
-		get_tree().quit();
 
 func remove_element(idx: int):
 	for i in get_children():
@@ -100,7 +116,7 @@ func _on_combine_element(idx: int) -> void:
 	remove_element(idx);
 
 @rpc("any_peer", "call_local", "reliable")
-func make_new_element(uid: int, e_name: String, pos: Vector2) -> void:
+func make_new_element(e_name: String, pos: Vector2) -> void:
 	var element;
 	for elem in elements:
 		if elem.name == e_name:
@@ -108,10 +124,9 @@ func make_new_element(uid: int, e_name: String, pos: Vector2) -> void:
 	
 	var draggable_element = Global.load_node("element");
 	add_child(draggable_element)
-	draggable_element.load_init(element, pos);
+	draggable_element.load_init(element, multiplayer.get_remote_sender_id(), pos);
 	draggable_element.combine_check.connect(check_element_in_combiner);
-	if multiplayer.get_unique_id() == uid:
-		draggable_element.is_clicked = true;
+	draggable_element.is_clicked = true;
 	
 func _on_game_ui_make_new_element(e_name: String, pos: Vector2) -> void:
-	make_new_element.rpc(multiplayer.get_unique_id(), e_name, pos);
+	make_new_element.rpc(e_name, pos);
