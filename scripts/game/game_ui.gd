@@ -43,7 +43,7 @@ func place_element_in_combiner(element: Element, idx: int, pos: Vector2):
 
 @rpc("any_peer", "call_local", "reliable")
 func check_element_in_combiner(element: Element, idx: int, pos: Vector2):
-	return place_element_in_combiner(element, idx, pos)
+	place_element_in_combiner.rpc(element, idx, pos)
 
 func _on_button_pressed() -> void:
 	pass
