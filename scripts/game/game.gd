@@ -42,7 +42,7 @@ func init_multiplayer():
 	
 	set_username.rpc(Global.curr_player_name)
 	if Global.is_server:
-		multiplayer.peer_connected.connect(peer_connected)
+		multiplayer.peer_connected.connect(_on_peer_connected)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
@@ -55,7 +55,8 @@ func return_to_menu():
 	send_chat_message.rpc("Disconnected");
 	if multiplayer.is_server():
 		send_server_message.rpc("THIS SERVER HAS CLOSED.")
-
+	
+	await get_tree().create_timer(0.1).timeout;
 	multiplayer.multiplayer_peer.close();
 	Global.change_scene("main_menu");
 
@@ -74,7 +75,7 @@ func get_server_elements():
 	if multiplayer.is_server():
 		send_server_elements.rpc(multiplayer.get_remote_sender_id())
 
-func peer_connected():
+func _on_peer_connected():
 	if not multiplayer.is_server(): return
 	
 	get_server_elements.rpc();

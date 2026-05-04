@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cid5yg2oty1ua"]
 
-[ext_resource type="Texture2D" uid="uid://djpqdcselecyh" path="res://export/linux-x86_64/assets/Air.png" id="1_0xve5"]
+[ext_resource type="Texture2D" uid="uid://djpqdcselecyh" path="res://export/windows/assets/Air.png" id="1_0xve5"]
 [ext_resource type="Script" uid="uid://daqih3pml3xgp" path="res://scripts/game/element.gd" id="2_0xve5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0xve5"]
