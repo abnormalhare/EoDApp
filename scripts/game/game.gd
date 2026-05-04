@@ -9,14 +9,13 @@ var elements: Array[Element] = [
 var combos: Array[Combination]
 var element_list_updated: bool = false
 
-@rpc("any_peer", "call_remote", "reliable")
+@rpc("any_peer", "call_local", "reliable")
 func set_username(username: String):
 	var sender_id = multiplayer.get_remote_sender_id()
-	if sender_id == 0:
-		Global.player_names[multiplayer.get_unique_id()] = username;
-	elif multiplayer.is_server():
-		Global.player_names[sender_id] = username;
-	send_chat_message.rpc_id(multiplayer.get_unique_id(), "Connected.")
+	
+	Global.player_names[sender_id] = username;
+	if multiplayer.get_unique_id() == sender_id:
+		send_chat_message.rpc("Connected.")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -41,10 +40,8 @@ func init_multiplayer():
 	
 	await get_tree().create_timer(0.25).timeout; # takes time to load multiplayer
 	
-	if not Global.is_server:
-		set_username.rpc(Global.curr_player_name)
-	else:
-		set_username(Global.curr_player_name)
+	set_username.rpc(Global.curr_player_name)
+	if Global.is_server:
 		multiplayer.peer_connected.connect(peer_connected)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -103,7 +100,7 @@ func _on_combine_element(idx: int) -> void:
 	remove_element(idx);
 
 @rpc("any_peer", "call_local", "reliable")
-func make_new_element(e_name: String, pos: Vector2) -> void:
+func make_new_element(uid: int, e_name: String, pos: Vector2) -> void:
 	var element;
 	for elem in elements:
 		if elem.name == e_name:
@@ -112,8 +109,9 @@ func make_new_element(e_name: String, pos: Vector2) -> void:
 	var draggable_element = Global.load_node("element");
 	add_child(draggable_element)
 	draggable_element.load_init(element, pos);
-	draggable_element.is_clicked = true;
 	draggable_element.combine_check.connect(check_element_in_combiner);
+	if multiplayer.get_unique_id() == uid:
+		draggable_element.is_clicked = true;
 	
 func _on_game_ui_make_new_element(e_name: String, pos: Vector2) -> void:
-	make_new_element.rpc(e_name, pos);
+	make_new_element.rpc(multiplayer.get_unique_id(), e_name, pos);
