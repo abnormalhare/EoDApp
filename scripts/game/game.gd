@@ -17,17 +17,18 @@ func init_multiplayer():
 
 	match error:
 		ERR_ALREADY_IN_USE:
-			print("Uh oh! Multiplayer Peer already open!")
+			print("Uh oh! Multiplayer Peer already open!");
 		ERR_CANT_CREATE:
-			print("Uh oh! Multiplayer Peer can't be made!")
+			print("Uh oh! Multiplayer Peer can't be made!");
 
-	multiplayer.connection_failed.connect(on_failed_connection)
+	multiplayer.connection_failed.connect(on_failed_connection);
 	multiplayer.multiplayer_peer = peer;
 
 	if Global.is_server:
 		SaveData.init()
-		multiplayer.peer_connected.connect(init_player_server)
+		multiplayer.peer_connected.connect(init_player_server);
 		await get_tree().create_timer(0.2).timeout; # takes time to load multiplayer
+		init_player_server(multiplayer.get_unique_id())
 	
 	Global.is_server = multiplayer.is_server()
 
@@ -36,32 +37,29 @@ func init_player_data(id: int):
 	if SaveData.player_data.has(id): return
 
 	SaveData.player_data[id] = {};
-	SaveData.player_data[id].elements = [];
-	SaveData.player_data[id].combos = [];
-
-	for i in SaveData.default_elements:
-		SaveData.player_data[id].elements.append(SaveData.elements[i])
+	SaveData.player_data[id]["elements"] = SaveData.default_elements.duplicate();
 
 @rpc("any_peer", "call_local", "reliable")
 func send_username(username: String):
 	if not multiplayer.is_server(): return
 	
-	var sender_id = multiplayer.get_remote_sender_id()
-	SaveData.player_data[sender_id].username = username;
+	var sender_id = multiplayer.get_remote_sender_id();
+	SaveData.player_data[sender_id]["username"] = username;
 
 @rpc("authority", "call_local", "reliable")
 func recieve_elements(new_elements: Array[Element]):
-	$GameUI.update_elements(new_elements)
+	$GameUI.update_elements(new_elements);
 
-@rpc("any_peer", "call_remote", "reliable")
+@rpc("any_peer", "call_local", "reliable")
 func init_player_client():
-	send_username.rpc(Global.curr_player_name)
-	send_chat_message.rpc("Connected.")
+	send_username.rpc(Global.curr_player_name);
+	send_chat_message.rpc("Connected.");
 
 func init_player_server(id: int):
-	init_player_data.rpc(id)
-	recieve_elements.rpc_id(id, SaveData.player_data[id].elements)
-	init_player_client.rpc_id(id)
+	init_player_data.rpc(id);
+	recieve_elements.rpc_id(id, SaveData.player_data[id]["elements"]);
+	init_player_client.rpc_id(id);
+	SaveData.save_server()
 
 func on_failed_connection():
 	Global.change_scene("game_ui");
@@ -91,7 +89,7 @@ func send_chat_message(msg: String):
 	var sanitized_msg = Global.sanitize_message(msg);
 	
 	var sender_id = multiplayer.get_remote_sender_id();
-	var sender_name = SaveData.player_data[sender_id].username;
+	var sender_name = SaveData.player_data[sender_id]["username"];
 	receive_chat_message.rpc(sender_name, sanitized_msg);
 
 @rpc("authority", "call_local", "reliable")

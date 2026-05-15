@@ -5,7 +5,7 @@ var curr_player_name := ""
 var server_ip := ""
 var element_pos: Array[Vector2] = [];
 var next_draggable_element_id := 0;
-var next_element_id := 4;
+var _next_element_id := 4;
 var is_typing := false;
 var dragged_element = null;
 var failed_to_connect := false;
@@ -21,7 +21,9 @@ func load_image(image: String) -> CompressedTexture2D:
 	return load("res://assets/" + image + ".png");
 
 func load_elem_image(image: String) -> ImageTexture:
-	return load("user://server/elements/" + image + ".png")
+	var img := Image.new()
+	img.load("user://server/elements/" + image + ".png")
+	return ImageTexture.create_from_image(img)
 
 func save_elem_image(image: Image, path: String):
 	image.save_png("user://server/elements/" + path + ".png")
@@ -40,5 +42,15 @@ func is_valid_ip_addr(ip: String) -> bool:
 
 	return true
 
+func get_combo_hash(elements: Array[Element]):
+	var hash_string = "".join(elements)
+	return hash_string.sha256_text()
+
+# TODO FIX THIS IS BAD
 func sanitize_message(msg: String) -> String:
 	return msg.strip_edges();
+
+func next_element_id():
+	var ret = _next_element_id;
+	_next_element_id += 1
+	return ret;

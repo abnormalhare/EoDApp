@@ -26,3 +26,4 @@ func to_json() -> Dictionary:
 
 func from_json(json: Dictionary):
 	_init(json["name"], json["id"], json["image"], Color.hex(json["color"]), json["desc"])
+	return self

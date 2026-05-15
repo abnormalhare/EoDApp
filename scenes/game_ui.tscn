@@ -11,6 +11,15 @@ TextEdit/font_sizes/font_size = 25
 
 [sub_resource type="Theme" id="Theme_ojb23"]
 
+[sub_resource type="LabelSettings" id="LabelSettings_u001w"]
+font_size = 39
+
+[sub_resource type="LabelSettings" id="LabelSettings_u2dgd"]
+font_size = 31
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u001w"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
 [node name="GameUI" type="Control" unique_id=1777733730]
 layout_mode = 3
 anchors_preset = 15
@@ -104,7 +113,116 @@ theme = ExtResource("1_yubou")
 wrap_mode = 1
 script = ExtResource("2_rns2u")
 
+[node name="NewElementPopup" type="Control" parent="." unique_id=1690125250]
+visible = false
+anchors_preset = 0
+offset_right = 1150.0
+offset_bottom = 649.0
+
+[node name="GreyOut" type="Panel" parent="NewElementPopup" unique_id=1364635915]
+layout_mode = 0
+offset_right = 1153.0
+offset_bottom = 644.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Options" type="VBoxContainer" parent="NewElementPopup" unique_id=881922267]
+layout_mode = 0
+offset_right = 1150.0
+offset_bottom = 646.0
+
+[node name="BlockTop" type="MarginContainer" parent="NewElementPopup/Options" unique_id=369163217]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+
+[node name="Container" type="HBoxContainer" parent="NewElementPopup/Options" unique_id=1204934960]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="BlockLeft" type="MarginContainer" parent="NewElementPopup/Options/Container" unique_id=701868075]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="NewElementPopup/Options/Container" unique_id=1428824010]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("1_yubou")
+
+[node name="Title" type="Label" parent="NewElementPopup/Options/Container/Panel" unique_id=100953389]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 10.0
+offset_right = 632.0
+offset_bottom = 79.0
+text = "You made a new element!"
+label_settings = SubResource("LabelSettings_u001w")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NameLabel" type="Label" parent="NewElementPopup/Options/Container/Panel" unique_id=119072896]
+layout_mode = 0
+offset_left = 92.0
+offset_top = 100.0
+offset_right = 190.0
+offset_bottom = 144.0
+text = "Name:"
+label_settings = SubResource("LabelSettings_u2dgd")
+
+[node name="Name" type="TextEdit" parent="NewElementPopup/Options/Container/Panel" unique_id=1343665772]
+layout_mode = 0
+offset_left = 221.0
+offset_top = 99.0
+offset_right = 519.0
+offset_bottom = 150.0
+
+[node name="DescLabel" type="Label" parent="NewElementPopup/Options/Container/Panel" unique_id=1988812827]
+layout_mode = 0
+offset_left = 97.0
+offset_top = 179.0
+offset_right = 195.0
+offset_bottom = 223.0
+text = "Desc:"
+label_settings = SubResource("LabelSettings_u2dgd")
+
+[node name="Desc" type="TextEdit" parent="NewElementPopup/Options/Container/Panel" unique_id=57381360]
+layout_mode = 0
+offset_left = 221.0
+offset_top = 163.0
+offset_right = 519.0
+offset_bottom = 236.0
+theme = ExtResource("1_yubou")
+theme_override_font_sizes/font_size = 22
+wrap_mode = 1
+
+[node name="CreateElement" type="Button" parent="NewElementPopup/Options/Container/Panel" unique_id=355422291]
+layout_mode = 0
+offset_left = 247.0
+offset_top = 257.0
+offset_right = 396.0
+offset_bottom = 313.0
+text = "Create"
+
+[node name="Escape" type="Button" parent="NewElementPopup/Options/Container/Panel" unique_id=1607211768]
+layout_mode = 0
+offset_left = 574.0
+offset_top = 11.0
+offset_right = 635.0
+offset_bottom = 75.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_u001w")
+text = "X"
+
+[node name="BlockRight" type="MarginContainer" parent="NewElementPopup/Options/Container" unique_id=1768454265]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+
+[node name="BlockBase" type="MarginContainer" parent="NewElementPopup/Options" unique_id=358859550]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+
 [connection signal="text_changed" from="Game/ElemInfo/Search" to="." method="_on_search_text_changed"]
 [connection signal="item_clicked" from="Game/ElemInfo/ElemList" to="." method="_on_elem_list_item_clicked"]
 [connection signal="pressed" from="Game/CombineArea/Combine" to="." method="_on_combine_pressed"]
 [connection signal="send_message" from="Game/Multplayer/Chat/Message" to="." method="_on_message_send_message"]
+[connection signal="pressed" from="NewElementPopup/Options/Container/Panel/CreateElement" to="." method="_on_create_element_pressed"]
+[connection signal="pressed" from="NewElementPopup/Options/Container/Panel/Escape" to="." method="_on_nep_escape_pressed"]

@@ -4,37 +4,41 @@ var default_elements: Array[int] = [0, 1, 2, 3]
 
 # assumes ID is also array index
 var elements: Array[Element] = []
-var combos: Dictionary[String, Element] = {}
+var combos: Dictionary[String, int] = {}
 var player_data := {}
 
 const server_info_path = "user://server/server.json"
 
-func convert_elements() -> Array:
-	var ret := []
-	for e in elements:
-		ret.append(e.to_json())
-	
-	return ret
+func save_new_element(combo_hash: String, element: Element, creator_id: int):
+	elements.append(element)
+	combos[combo_hash] = element.id;
+	player_data[creator_id].elements.append(element.id)
+	save_server()
 
 func init_server():
 	var dir = server_info_path.get_base_dir()
 	DirAccess.make_dir_recursive_absolute(dir)
-	
+
 	elements = [
 		Element.new("Air", 0),
 		Element.new("Earth", 1),
 		Element.new("Fire", 2),
 		Element.new("Water", 3),
 	]
-	var elem_json = convert_elements();
+
+	save_server()
+
+func save_server():
+	var elem_json := []
+	for e in elements:
+		elem_json.append(e.to_json())
+	
+	var player_data_json := {}
+	for p in player_data:
+		player_data_json[str(p)] = player_data[p]
 
 	var file = FileAccess.open(server_info_path, FileAccess.WRITE)
-	file.store_string('{
-	"defaults": %s,
-	"elements": %s,
-	"combos": %s,
-	"players": %s,
-}' % [default_elements, elem_json, combos, player_data])
+	file.store_string('{ "defaults": %s, "elements": %s, "combos": %s, "players": %s }' % [default_elements, elem_json, combos, player_data_json])
 	file.close()
 
 func load_server():
@@ -52,7 +56,10 @@ func load_server():
 	for e in json["elements"]:
 		elements.append(Element.new().from_json(e))
 
-	combos = json["combos"]
+	combos = {}
+	for c in json["combos"]:
+		combos[c] = json["combos"][c]
+
 	player_data = json["players"]
 
 func init():
