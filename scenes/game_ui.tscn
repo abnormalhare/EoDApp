@@ -41,12 +41,11 @@ text = "Element Info"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TextEdit" type="TextEdit" parent="Game/ElemInfo" unique_id=1115254877]
+[node name="Search" type="TextEdit" parent="Game/ElemInfo" unique_id=1115254877]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 size_flags_vertical = 0
 placeholder_text = "Search..."
-script = ExtResource("2_rns2u")
 
 [node name="ElemList" type="ItemList" parent="Game/ElemInfo" unique_id=534670006]
 custom_minimum_size = Vector2(0, 500)
@@ -67,8 +66,9 @@ size_flags_horizontal = 3
 [node name="CombineList" type="ItemList" parent="Game/CombineArea" unique_id=56341256]
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 1
 
-[node name="Button" type="Button" parent="Game/CombineArea" unique_id=1599360493]
+[node name="Combine" type="Button" parent="Game/CombineArea" unique_id=1599360493]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 theme = ExtResource("1_yubou")
@@ -104,6 +104,7 @@ theme = ExtResource("1_yubou")
 wrap_mode = 1
 script = ExtResource("2_rns2u")
 
+[connection signal="text_changed" from="Game/ElemInfo/Search" to="." method="_on_search_text_changed"]
 [connection signal="item_clicked" from="Game/ElemInfo/ElemList" to="." method="_on_elem_list_item_clicked"]
-[connection signal="pressed" from="Game/CombineArea/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Game/CombineArea/Combine" to="." method="_on_combine_pressed"]
 [connection signal="send_message" from="Game/Multplayer/Chat/Message" to="." method="_on_message_send_message"]

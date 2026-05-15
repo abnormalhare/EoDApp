@@ -1,6 +1,14 @@
 [gd_resource type="Theme" format=3 uid="uid://bbg3suph6fdnq"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_45xvp"]
+bg_color = Color(0.19719999, 0.42687994, 0.58, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
 [resource]
 Button/font_sizes/font_size = 30
 Label/font_sizes/font_size = 50
+Panel/styles/panel = SubResource("StyleBoxFlat_45xvp")
 TextEdit/font_sizes/font_size = 25

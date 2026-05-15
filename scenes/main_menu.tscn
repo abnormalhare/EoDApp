@@ -4,8 +4,10 @@
 [ext_resource type="Theme" uid="uid://bbg3suph6fdnq" path="res://themes/main_menu_theme.tres" id="1_l6cm7"]
 [ext_resource type="Script" uid="uid://dv07qkqsj6o7v" path="res://scripts/main_menu/play_game_button.gd" id="2_ekxnf"]
 [ext_resource type="Script" uid="uid://b516xdrc0i6hw" path="res://scripts/main_menu/username.gd" id="2_wu84c"]
-[ext_resource type="Script" uid="uid://d4dwkv3si3aeo" path="res://scripts/main_menu/host_server_button.gd" id="3_bqqt6"]
 [ext_resource type="Script" uid="uid://c5r1ro2glgqnj" path="res://scripts/main_menu/ip_input.gd" id="4_rtw2f"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8ln24"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
 
 [node name="MainMenu" type="Control" unique_id=1475363255]
 layout_mode = 3
@@ -16,68 +18,201 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_8ln24")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1376590056]
+[node name="Container" type="VBoxContainer" parent="." unique_id=1376590056]
 layout_mode = 0
 offset_right = 1152.0
 offset_bottom = 649.0
 
-[node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer" unique_id=365550516]
+[node name="MarginContainer2" type="MarginContainer" parent="Container" unique_id=365550516]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer" unique_id=1570525742]
+[node name="Title" type="Label" parent="Container" unique_id=1570525742]
 layout_mode = 2
 theme = ExtResource("1_l6cm7")
 text = "EoD App"
 horizontal_alignment = 1
 
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer" unique_id=792247511]
+[node name="MarginContainer" type="MarginContainer" parent="Container" unique_id=792247511]
 custom_minimum_size = Vector2(0, 150)
 layout_mode = 2
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer" unique_id=1682945553]
+[node name="NameContainer" type="HBoxContainer" parent="Container" unique_id=1682945553]
 layout_mode = 2
 alignment = 1
 
-[node name="TextEdit" type="TextEdit" parent="VBoxContainer/HBoxContainer3" unique_id=1803458469]
+[node name="Username" type="TextEdit" parent="Container/NameContainer" unique_id=1803458469]
 custom_minimum_size = Vector2(300, 50)
 layout_mode = 2
 theme = ExtResource("1_l6cm7")
 placeholder_text = "Enter Name"
 script = ExtResource("2_wu84c")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=1073686630]
+[node name="JoinContainer" type="HBoxContainer" parent="Container" unique_id=1073686630]
 layout_mode = 2
 alignment = 1
 
-[node name="TextEdit" type="TextEdit" parent="VBoxContainer/HBoxContainer" unique_id=219735296]
+[node name="IPAddress" type="TextEdit" parent="Container/JoinContainer" unique_id=219735296]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme = ExtResource("1_l6cm7")
 placeholder_text = "Server IP"
 script = ExtResource("4_rtw2f")
 
-[node name="Button" type="Button" parent="VBoxContainer/HBoxContainer" unique_id=1486001697]
+[node name="Play" type="Button" parent="Container/JoinContainer" unique_id=1486001697]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme = ExtResource("1_l6cm7")
 text = "Play Game"
 script = ExtResource("2_ekxnf")
 
-[node name="MarginContainer3" type="MarginContainer" parent="VBoxContainer" unique_id=1899375322]
+[node name="MarginContainer3" type="MarginContainer" parent="Container" unique_id=1899375322]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer" unique_id=863769454]
+[node name="HostContainer" type="HBoxContainer" parent="Container" unique_id=863769454]
 layout_mode = 2
 alignment = 1
 
-[node name="Button" type="Button" parent="VBoxContainer/HBoxContainer2" unique_id=1887182925]
+[node name="Host" type="Button" parent="Container/HostContainer" unique_id=1887182925]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme = ExtResource("1_l6cm7")
 text = "Host Server"
-script = ExtResource("3_bqqt6")
 
-[connection signal="invalid_ip" from="VBoxContainer/HBoxContainer/TextEdit" to="." method="_on_invalid_ip"]
-[connection signal="invalid_ip" from="VBoxContainer/HBoxContainer/Button" to="." method="_on_invalid_ip"]
+[node name="HostOptions" type="Control" parent="." unique_id=825158585]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="GreyOut" type="Panel" parent="HostOptions" unique_id=1889632499]
+layout_mode = 0
+offset_right = 1153.0
+offset_bottom = 649.0
+size_flags_vertical = 3
+
+[node name="Options" type="VBoxContainer" parent="HostOptions" unique_id=762750953]
+layout_mode = 0
+offset_right = 1153.0
+offset_bottom = 649.0
+alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="HostOptions/Options" unique_id=2053179931]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+
+[node name="Container" type="HBoxContainer" parent="HostOptions/Options" unique_id=1884373661]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="HostOptions/Options/Container" unique_id=255961862]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="HostOptions/Options/Container" unique_id=586938517]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("1_l6cm7")
+
+[node name="Label" type="Label" parent="HostOptions/Options/Container/Panel" unique_id=1493482748]
+layout_mode = 0
+offset_left = 167.0
+offset_top = 10.0
+offset_right = 494.0
+offset_bottom = 79.0
+text = "Host Options"
+
+[node name="HostConfirm" type="Button" parent="HostOptions/Options/Container/Panel" unique_id=1179072043]
+layout_mode = 0
+offset_left = 239.0
+offset_top = 259.0
+offset_right = 388.0
+offset_bottom = 315.0
+text = "Host"
+
+[node name="Escape" type="Button" parent="HostOptions/Options/Container/Panel" unique_id=177278143]
+layout_mode = 0
+offset_left = 574.0
+offset_top = 11.0
+offset_right = 635.0
+offset_bottom = 75.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_8ln24")
+text = "X"
+
+[node name="MarginContainer2" type="MarginContainer" parent="HostOptions/Options/Container" unique_id=1112802619]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="HostOptions/Options" unique_id=1696721328]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+
+[node name="ConnectFail" type="Control" parent="." unique_id=1051130879]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="GreyOut2" type="Panel" parent="ConnectFail" unique_id=652130822]
+layout_mode = 0
+offset_right = 1153.0
+offset_bottom = 649.0
+size_flags_vertical = 3
+
+[node name="Options2" type="VBoxContainer" parent="ConnectFail" unique_id=698754105]
+layout_mode = 0
+offset_right = 1153.0
+offset_bottom = 649.0
+alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="ConnectFail/Options2" unique_id=731002202]
+custom_minimum_size = Vector2(0, 250)
+layout_mode = 2
+
+[node name="Container" type="HBoxContainer" parent="ConnectFail/Options2" unique_id=626621740]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="ConnectFail/Options2/Container" unique_id=1532332410]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="ConnectFail/Options2/Container" unique_id=699578730]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("1_l6cm7")
+
+[node name="Label" type="Label" parent="ConnectFail/Options2/Container/Panel" unique_id=716391090]
+layout_mode = 0
+offset_left = 108.0
+offset_top = 37.0
+offset_right = 539.0
+offset_bottom = 106.0
+text = "Connection Failed"
+
+[node name="Escape" type="Button" parent="ConnectFail/Options2/Container/Panel" unique_id=546616580]
+layout_mode = 0
+offset_left = 574.0
+offset_top = 11.0
+offset_right = 635.0
+offset_bottom = 75.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_8ln24")
+text = "X"
+
+[node name="MarginContainer2" type="MarginContainer" parent="ConnectFail/Options2/Container" unique_id=1576459586]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="ConnectFail/Options2" unique_id=641644049]
+custom_minimum_size = Vector2(0, 250)
+layout_mode = 2
+
+[connection signal="invalid_ip" from="Container/JoinContainer/IPAddress" to="." method="_on_invalid_ip"]
+[connection signal="invalid_ip" from="Container/JoinContainer/Play" to="." method="_on_invalid_ip"]
+[connection signal="pressed" from="Container/HostContainer/Host" to="." method="_on_host_pressed"]
+[connection signal="pressed" from="HostOptions/Options/Container/Panel/HostConfirm" to="." method="_on_host_confirm_pressed"]
+[connection signal="pressed" from="HostOptions/Options/Container/Panel/Escape" to="." method="_on_host_escape_pressed"]
+[connection signal="pressed" from="ConnectFail/Options2/Container/Panel/Escape" to="." method="_on_connect_fail_escape_pressed"]

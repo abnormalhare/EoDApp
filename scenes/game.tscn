@@ -9,6 +9,6 @@ script = ExtResource("1_uwrxv")
 [node name="GameUI" parent="." unique_id=1777733730 instance=ExtResource("2_yqjtg")]
 mouse_filter = 1
 
-[connection signal="combine_element" from="GameUI" to="." method="_on_combine_element"]
+[connection signal="delete_element" from="GameUI" to="." method="_on_delete_element"]
 [connection signal="make_new_element" from="GameUI" to="." method="_on_game_ui_make_new_element"]
 [connection signal="send_message" from="GameUI" to="." method="_on_game_ui_send_message"]
