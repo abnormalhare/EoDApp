@@ -25,9 +25,10 @@ func _on_host_escape_pressed() -> void:
 	$HostOptions.visible = false
 
 func _on_host_confirm_pressed() -> void:
+	if Global.curr_player_name == "":
+		$Container/NameContainer/Username.placeholder_text = "Input a Username"
 	Global.is_server = true;
 	Global.change_scene("game")
-
 
 func _on_connect_fail_escape_pressed() -> void:
 	$ConnectFail.visible = false

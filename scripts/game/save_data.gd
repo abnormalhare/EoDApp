@@ -49,7 +49,7 @@ func load_server():
 	var json = JSON.parse_string(text)
 	
 	default_elements = []
-	for n in default_elements:
+	for n in json["defaults"]:
 		default_elements.append(int(n))
 	
 	elements = []

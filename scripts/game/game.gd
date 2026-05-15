@@ -4,6 +4,7 @@ var element_list_updated: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	visible = false
 	init_multiplayer();
 	$GameUI.update_elements(SaveData.elements);
 
@@ -21,12 +22,12 @@ func init_multiplayer():
 		ERR_CANT_CREATE:
 			print("Uh oh! Multiplayer Peer can't be made!");
 
-	multiplayer.connection_failed.connect(on_failed_connection);
 	multiplayer.multiplayer_peer = peer;
+	multiplayer.connection_failed.connect(on_failed_connection);
 
 	if Global.is_server:
 		SaveData.init()
-		multiplayer.peer_connected.connect(init_player_server);
+		multiplayer.peer_connected.connect(init_player);
 		await get_tree().create_timer(0.2).timeout; # takes time to load multiplayer
 		init_player_server(multiplayer.get_unique_id())
 	
@@ -51,15 +52,26 @@ func recieve_elements(new_elements: Array[Element]):
 	$GameUI.update_elements(new_elements);
 
 @rpc("any_peer", "call_local", "reliable")
-func init_player_client():
-	send_username.rpc(Global.curr_player_name);
+func init_player_client(username: String):
+	visible = true
+	send_username.rpc(username);
 	send_chat_message.rpc("Connected.");
 
+@rpc("authority", "call_local", "reliable")
 func init_player_server(id: int):
 	init_player_data.rpc(id);
 	recieve_elements.rpc_id(id, SaveData.player_data[id]["elements"]);
-	init_player_client.rpc_id(id);
+	init_player_client.rpc_id(id, Global.curr_player_name);
 	SaveData.save_server()
+
+@rpc("any_peer", "call_local", "reliable")
+func send_init_player():
+	if not multiplayer.is_server(): return
+	
+	init_player_server.rpc(multiplayer.get_remote_sender_id())
+
+func init_player():
+	send_init_player()
 
 func on_failed_connection():
 	Global.change_scene("game_ui");
